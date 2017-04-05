@@ -129,7 +129,7 @@ const server = sgServer({
   ],
   endpoints: {
     // Exports actor module functions as http endpoint (like "/account/purchase-history")
-    '/api/:module/:method': { GET: sugoEndpointHTML(renders) }
+    '/:module/:method': { GET: sugoEndpointHTML(renders) }
   }
 })
 
