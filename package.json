@@ -1,6 +1,6 @@
 {
   "name": "sugo-endpoint-html",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sugo endpoint to server dynamic HTML",
   "main": "lib",
   "scripts": {
