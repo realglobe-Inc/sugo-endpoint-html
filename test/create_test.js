@@ -18,6 +18,7 @@ describe('create', () => {
   before(() => co(function * () {
     let endpoint = create({
       account: {
+        index: () => '<!DOCTYPE html><html><body>The Index!</body></html>',
         purchaseHistory: () => '<!DOCTYPE html><html><body>hoge</body></html>'
       }
     })
@@ -25,6 +26,7 @@ describe('create', () => {
     let port = yield aport()
     server = sgServer({
       endpoints: {
+        '/:module': { GET: endpoint }, // For index
         '/:module/:method': { GET: endpoint }
       }
     })
@@ -46,6 +48,17 @@ describe('create', () => {
     equal(headers[ 'content-type' ], 'text/html; charset=utf-8')
     equal(statusCode, 200)
     equal(body, '<!DOCTYPE html><html><body>hoge</body></html>')
+  }))
+
+  it('Get index', () => co(function * () {
+    let { body, statusCode, headers } = yield request({
+      method: 'GET',
+      url: `${baseUrl}/account`
+    })
+    ok(body)
+    equal(headers[ 'content-type' ], 'text/html; charset=utf-8')
+    equal(statusCode, 200)
+    equal(body, '<!DOCTYPE html><html><body>The Index!</body></html>')
   }))
 })
 
